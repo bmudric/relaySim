@@ -10,7 +10,8 @@ public class StatusController {
   @GetMapping
   public String returnStatus(HttpServletResponse response){
     response.addHeader("Access-Control-Allow-Origin", "*");
-    return String.format("{\"relayIsOn\":\"%s\"}", generateStatus());
+    response.addHeader("Content-Type", "application/json");
+    return String.format("{\"relayIsOn\":%b}", generateStatus());
   }
 
   private boolean generateStatus() {
