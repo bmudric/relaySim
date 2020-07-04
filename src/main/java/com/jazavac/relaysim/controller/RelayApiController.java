@@ -3,6 +3,7 @@ package com.jazavac.relaysim.controller;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * This class is used to simulate turning a relay on and off, as well as getting the current state
  */
 @RestController
+@CrossOrigin
 @Slf4j
 public class RelayApiController {
 
@@ -19,8 +21,6 @@ public class RelayApiController {
   @GetMapping("/status")
   public String returnStatus(HttpServletResponse response) {
     log.debug("Client requesting GET /status");
-    response.addHeader("Access-Control-Allow-Origin", "*");
-    response.addHeader("Content-Type", "application/json");
     return String.format("{\"relayIsOn\":%b}", relayIsOn.get());
   }
 
