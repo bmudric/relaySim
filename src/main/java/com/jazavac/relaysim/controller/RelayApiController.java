@@ -1,7 +1,7 @@
 package com.jazavac.relaysim.controller;
 
+import com.jazavac.relaysim.RelayResponse;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,22 +19,22 @@ public class RelayApiController {
   private AtomicBoolean relayIsOn = new AtomicBoolean(false);
 
   @GetMapping("/status")
-  public String returnStatus(HttpServletResponse response) {
+  public RelayResponse returnStatus() {
     log.debug("Client requesting GET /status");
-    return String.format("{\"relayIsOn\":%b}", relayIsOn.get());
+    return new RelayResponse(relayIsOn.get());
   }
 
   @PostMapping("/on")
-  public String handleOn(HttpServletResponse response) {
+  public RelayResponse handleOn() {
     log.debug("Client requesting POST /on");
     relayIsOn.set(true);
-    return returnStatus(response);
+    return returnStatus();
   }
 
   @PostMapping("/off")
-  public String handleOff(HttpServletResponse response) {
+  public RelayResponse handleOff() {
     log.debug("Client requesting POST /off");
     relayIsOn.set(false);
-    return returnStatus(response);
+    return returnStatus();
   }
 }
